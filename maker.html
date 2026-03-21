@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owen — Maker Stuff</title>
+  <meta name="description" content="Tutorials, build logs, and maker community links.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <header>
+    <nav>
+      <a href="/" class="nav-name">Owen</a>
+      <ul class="nav-links">
+        <li><a href="#tutorials">Tutorials</a></li>
+        <li><a href="#builds">Builds</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-label">// builds · tutorials · community</p>
+      <h1>Welcome to the<br>workshop.</h1>
+      <p class="hero-intro">
+        I build embedded hardware projects and try to explain them
+        well enough that you could build one too. If you grabbed one
+        of my PCB cards — nice, that's a real dev board. Here's what
+        you can do with it.
+      </p>
+      <div class="status-bar">
+        <span class="status-tag now">OpenSauce 2026</span>
+        <span class="status-tag">Seattle maker</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Tutorials -->
+  <section id="tutorials">
+    <div class="container">
+      <p class="section-label">Learn</p>
+      <h2>Tutorials</h2>
+
+      <div class="projects-grid">
+
+        <a href="#" class="project-card">
+          <h3>Getting Started with Your PCB Card</h3>
+          <p>
+            You've got an ATmega328PB dev board in your hands. Here's
+            how to plug it in, install the toolchain, and blink your
+            first LED. No Arduino IDE required (but it works with that too).
+          </p>
+          <p class="note">→ coming soon</p>
+          <div class="tech-stack">
+            <span class="tech-tag">ATmega328PB</span>
+            <span class="tech-tag">beginner</span>
+            <span class="tech-tag">USB-C</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <h3>Arduino to Bare Metal</h3>
+          <p>
+            A guide for Arduino users who want to understand what's
+            happening under the hood. Registers, fuse bits, and why
+            digitalWrite() is slow.
+          </p>
+          <p class="note">→ coming soon</p>
+          <div class="tech-stack">
+            <span class="tech-tag">AVR</span>
+            <span class="tech-tag">C</span>
+            <span class="tech-tag">registers</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Builds -->
+  <section id="builds">
+    <div class="container">
+      <p class="section-label">Show & Tell</p>
+      <h2>Builds</h2>
+
+      <div class="projects-grid">
+
+        <a href="#" class="project-card">
+          <h3>LED Physics Cube</h3>
+          <p>
+            A falling-sand physics sim running on a six-sided LED cube.
+            Tilt it and the particles tumble. ESP32-S3 brain, IMU for
+            orientation, 384 LEDs, and a lot of C.
+          </p>
+          <p class="note">→ build log with photos coming soon</p>
+          <div class="tech-stack">
+            <span class="tech-tag">ESP32-S3</span>
+            <span class="tech-tag">WS2812B</span>
+            <span class="tech-tag">3D printed</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <h3>PCB Business Card</h3>
+          <p>
+            The card you're probably holding. A real ATmega328PB dev
+            board in a business card form factor, designed in KiCad
+            and fabbed at JLCPCB. Yes, you can program it.
+          </p>
+          <p class="note">→ design walkthrough coming soon</p>
+          <div class="tech-stack">
+            <span class="tech-tag">KiCad</span>
+            <span class="tech-tag">JLCPCB</span>
+            <span class="tech-tag">USB-C</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Say hi</p>
+      <h2>Contact</h2>
+      <p class="hero-intro" style="margin-bottom: 1rem;">
+        Find me online or come say hi at a convention. Always happy
+        to talk about projects, PCB design, or embedded weirdness.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com">Email</a>
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <p>&copy; 2026 Owen</p>
+        <p>plain html & css, hosted on vercel</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

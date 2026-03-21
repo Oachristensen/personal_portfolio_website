@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owen — Projects & Background</title>
+  <meta name="description" content="Embedded systems projects, PCB design, and professional background.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <header>
+    <nav>
+      <a href="/" class="nav-name">Owen</a>
+      <ul class="nav-links">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#background">Background</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-label">// embedded systems · pcb design · firmware</p>
+      <h1>I like knowing why<br>the hardware works.</h1>
+      <p class="hero-intro">
+        I'm an aerospace technician at <strong>Project Kuiper</strong> who
+        builds embedded projects on the side — PCBs, firmware, physics
+        sims on microcontrollers. Currently working toward a degree in
+        <span class="marker">Electrical & Computer Engineering at UW</span>
+        and looking for internships where I can go deep on real problems.
+      </p>
+      <div class="status-bar">
+        <span class="status-tag now">Transferring to UW ECE</span>
+        <span class="status-tag">Previously @ Starlink</span>
+        <span class="status-tag">Seattle, WA</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">Selected Work</p>
+      <h2>Projects</h2>
+
+      <div class="projects-grid">
+
+        <a href="#" class="project-card">
+          <h3>LED Physics Cube</h3>
+          <p>
+            Six-sided cube running a falling-sand physics sim. ESP32-S3
+            drives 384 WS2812B LEDs across six panels, ICM-20948 IMU
+            handles orientation. Firmware in C with a custom multi-matrix
+            I2C bus. Tilt it and the particles fall.
+          </p>
+          <p class="note">→ build log & design writeup coming soon</p>
+          <div class="tech-stack">
+            <span class="tech-tag">ESP32-S3</span>
+            <span class="tech-tag">C</span>
+            <span class="tech-tag">ICM-20948</span>
+            <span class="tech-tag">WS2812B</span>
+            <span class="tech-tag">I2C</span>
+          </div>
+        </a>
+
+        <a href="#" class="project-card">
+          <h3>ATmega328PB Dev Board</h3>
+          <p>
+            Custom dev board designed in KiCad around the ATmega328PB-M
+            (QFN-32) with CH340C USB-UART. Doubles as a business card.
+            Full schematic from scratch — crystal load caps, USB-C CC
+            resistors, DTR auto-reset, proper ground plane. Fab'd at JLCPCB.
+          </p>
+          <p class="note">→ first revision in production</p>
+          <div class="tech-stack">
+            <span class="tech-tag">KiCad</span>
+            <span class="tech-tag">ATmega328PB</span>
+            <span class="tech-tag">CH340C</span>
+            <span class="tech-tag">USB-C</span>
+            <span class="tech-tag">JLCPCB</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Background -->
+  <section id="background">
+    <div class="container">
+      <p class="section-label">Context</p>
+      <h2>Background</h2>
+
+      <div class="background-grid">
+        <div class="bg-card">
+          <h3>Project Kuiper</h3>
+          <p class="sub">Aerospace Technician · current</p>
+          <p>Satellite hardware assembly and integration. Before this, same kind of work at Starlink.</p>
+        </div>
+        <div class="bg-card">
+          <h3>UW ECE</h3>
+          <p class="sub">Transfer student · in progress</p>
+          <p>Electrical & Computer Engineering. Coursework in circuits, systems, and embedded programming.</p>
+        </div>
+        <div class="bg-card">
+          <h3>Embedded focus</h3>
+          <p class="sub">What I care about</p>
+          <p>The whole stack — schematic to layout to firmware to drivers. I want to understand every layer.</p>
+        </div>
+        <div class="bg-card">
+          <h3>Looking for</h3>
+          <p class="sub">Internships · 2026</p>
+          <p>Embedded roles at mid-size companies. Somewhere I can go deep, not just wide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Get in touch</p>
+      <h2>Contact</h2>
+      <div class="contact-links">
+        <a href="mailto:your@email.com">Email</a>
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <p>&copy; 2026 Owen</p>
+        <p>plain html & css, hosted on vercel</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
