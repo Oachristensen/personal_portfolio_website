@@ -31,8 +31,8 @@
       <p class="hero-intro">
         I'm an aerospace technician at <strong>Project Kuiper</strong> who
         builds embedded projects on the side, mostly firmware on microcontrollers
-        and I have been diving deeper into PCB design. Currently working toward a degree in Electrical & Computer
-        Engineering at UW and looking for internships where I can apply my skills to real problems
+        and I have been diving deeper into PCB design. Currently working toward a degree in <span class="marker">Electrical & Computer Engineering at UW</span>
+        and looking for internships where I can apply my skills to real problems
       </p>
       <div class="status-bar">
         <span class="status-tag now">Working at Amazon Project Kuiper</span>
@@ -56,20 +56,21 @@
       <div class="projects-grid">
 
         <a href="#" class="project-card">
-          <h3>LED Physics Cube</h3>
+          <h3>Gravity Cube</h3>
           <p>
-            Six-sided cube running a falling-sand physics sim. ESP32-S3
-            drives 384 WS2812B LEDs across six panels, ICM-20948 IMU
-            handles orientation. Firmware in C with a custom multi-matrix
-            I2C bus. Tilt it and the particles fall.
+            A 3d phyisics sand simulation running on a cube of WS2812B LED matrixes.
+            The simulation is driven by an ESP32-S3 which recieves data from an ICM-20948 IMU over SPI.
+            The firmware was written in C using the ESP-IDF framework and FreeRTOS, with a custom
+            library to convert the phyiscs data to the sequence of 384 LEDs in the matrixes.
           </p>
           <p class="note">→ build log & design writeup coming soon</p>
           <div class="tech-stack">
             <span class="tech-tag">ESP32-S3</span>
+            <span class="tech-tag">ESP-IDF</span>
             <span class="tech-tag">C</span>
             <span class="tech-tag">ICM-20948</span>
-            <span class="tech-tag">WS2812B</span>
-            <span class="tech-tag">I2C</span>
+            <span class="tech-tag">FreeRTOS</span>
+            <span class="tech-tag">SPI</span>
           </div>
         </a>
 
@@ -77,11 +78,12 @@
           <h3>ATmega328PB Dev Board</h3>
           <p>
             Custom dev board designed in KiCad around the ATmega328PB-M
-            (QFN-32) with CH340C USB-UART. Doubles as a business card.
+            with CH340C USB-UART. Doubles as a business card (I may have even given you one).
             Full schematic from scratch — crystal load caps, USB-C CC
-            resistors, DTR auto-reset, proper ground plane. Fab'd at JLCPCB.
+            resistors, DTR auto-reset. Ordered PCBs from JLCPCB, components from LCSC and assembled myself using a hotplate.
           </p>
           <p class="note">→ first revision in production</p>
+          <!-- I don't love this list-->
           <div class="tech-stack">
             <span class="tech-tag">KiCad</span>
             <span class="tech-tag">ATmega328PB</span>
@@ -119,12 +121,13 @@
         <div class="bg-card">
           <h3>Embedded focus</h3>
           <p class="sub">What I care about</p>
-          <p>The whole stack — schematic to layout to firmware to drivers. I want to understand every layer.</p>
+          <p>The whole stack — schematic to layout to firmware to drivers. I want to truly understand how every part operates.</p>
         </div>
         <div class="bg-card">
           <h3>Looking for</h3>
           <p class="sub">Internships · 2026</p>
-          <p>Embedded roles at mid-size companies. Somewhere I can go deep, not just wide.</p>
+            <!-- Don't love this one either -->
+          <p>Embedded or Firmware roles at mid-size companies. Somewhere I can go deep, not just wide.</p>
         </div>
       </div>
     </div>
@@ -151,7 +154,7 @@
     <div class="container">
       <div class="footer-inner">
         <p>&copy; 2026 Owen</p>
-        <p>plain html & css, hosted on vercel</p>
+        <p>plain html & css</p>
       </div>
     </div>
   </footer>
