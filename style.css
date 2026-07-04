@@ -16,7 +16,7 @@
   --red-ink:    #b03a30;
   --blue-ink:   #2d5a8a;
   --pencil:     #6a6a60;
-  --highlight:  rgba(255, 230, 100, 0.4);
+  --highlight:  rgba(255, 224, 82, 0.55);
   --mono:       'IBM Plex Mono', monospace;
   --serif:      'Instrument Serif', Georgia, serif;
   --grid-sm:    20px;
@@ -162,8 +162,19 @@ nav {
 .landing-card .tagline {
   font-size: 0.85rem;
   color: var(--ink-mid);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
+
+.landing-prompt {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.landing-prompt::before { content: '↓ '; color: var(--red-ink); }
 
 .landing-paths {
   display: grid;
@@ -214,9 +225,15 @@ nav {
 
 .landing-path .path-arrow {
   margin-top: 1rem;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--blue-ink);
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.25s, transform 0.25s;
+}
+
+.landing-path:hover .path-arrow {
+  color: var(--red-ink);
+  transform: translateX(3px);
 }
 
 .landing-footer {
@@ -278,11 +295,37 @@ nav {
   font-weight: 600;
 }
 
-/* Highlight marker effect */
+/* Highlight marker effect — reads like a real highlighter stroke
+   that only covers the text band (wraps cleanly across lines) */
 .marker {
-  background: var(--highlight);
-  padding: 0 3px;
-  margin: 0 -3px;
+  background-image: linear-gradient(var(--highlight), var(--highlight));
+  background-repeat: no-repeat;
+  background-size: 100% 0.72em;
+  background-position: 0 0.5em;
+  padding: 0 0.15em;
+  margin: 0 -0.1em;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Red-pen emphasis for the single most important phrase on a page */
+.marker-red {
+  background-image: linear-gradient(rgba(176, 58, 48, 0.16), rgba(176, 58, 48, 0.16));
+  background-repeat: no-repeat;
+  background-size: 100% 0.72em;
+  background-position: 0 0.5em;
+  padding: 0 0.15em;
+  margin: 0 -0.1em;
+  color: var(--red-ink);
+  font-weight: 600;
+}
+
+/* Inline underline-emphasis, like a pencil underline in a notebook */
+.underline-note {
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 2px solid var(--grid-heavy);
+  padding-bottom: 1px;
 }
 
 /* --- Status tags --- */
@@ -312,6 +355,64 @@ nav {
 
 .status-tag.now::before {
   content: '→ ';
+}
+
+/* --- Hero action buttons --- */
+.hero-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.55rem 1.2rem;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--red-ink);
+  color: var(--paper);
+  border: 1.5px solid var(--red-ink);
+}
+.btn-primary:hover {
+  background: #93312a;
+  border-color: #93312a;
+  color: var(--paper);
+}
+
+.btn-secondary {
+  border: 1.5px solid var(--grid-heavy);
+  color: var(--ink-mid);
+}
+.btn-secondary:hover {
+  color: var(--blue-ink);
+  border-color: var(--blue-ink);
+}
+
+/* --- Résumé page --- */
+.resume-frame {
+  display: block;
+  width: 100%;
+  height: 80vh;
+  min-height: 500px;
+  border: 1.5px solid var(--grid-heavy);
+  border-radius: 4px;
+  background: var(--paper-dark);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.resume-fallback {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--ink-mid);
+  font-size: 0.85rem;
+  line-height: 1.8;
 }
 
 /* --- Divider --- */
@@ -375,6 +476,12 @@ section h2 {
   color: var(--ink-mid);
   margin-bottom: 1rem;
   line-height: 1.8;
+}
+
+.project-card p strong,
+.bg-card p strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .project-card .note {
