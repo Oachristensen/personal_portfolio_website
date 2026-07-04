@@ -357,6 +357,64 @@ nav {
   content: '→ ';
 }
 
+/* --- Hero action buttons --- */
+.hero-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.55rem 1.2rem;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--red-ink);
+  color: var(--paper);
+  border: 1.5px solid var(--red-ink);
+}
+.btn-primary:hover {
+  background: #93312a;
+  border-color: #93312a;
+  color: var(--paper);
+}
+
+.btn-secondary {
+  border: 1.5px solid var(--grid-heavy);
+  color: var(--ink-mid);
+}
+.btn-secondary:hover {
+  color: var(--blue-ink);
+  border-color: var(--blue-ink);
+}
+
+/* --- Résumé page --- */
+.resume-frame {
+  display: block;
+  width: 100%;
+  height: 80vh;
+  min-height: 500px;
+  border: 1.5px solid var(--grid-heavy);
+  border-radius: 4px;
+  background: var(--paper-dark);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.resume-fallback {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--ink-mid);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
 /* --- Divider --- */
 .divider {
   border: none;
