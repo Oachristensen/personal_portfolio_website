@@ -621,9 +621,137 @@ footer {
   font-weight: 500;
 }
 
+/* =========================================
+   Project Writeup / Article Prose
+   ========================================= */
+
+/* Wraps the body prose of a writeup section (after .section-label + h2).
+   Scoped so these generic tag styles never leak onto the card pages. */
+.writeup p {
+  font-size: 0.9rem;
+  color: var(--ink-mid);
+  margin-bottom: 1.1rem;
+}
+
+.writeup p strong { color: var(--ink); font-weight: 600; }
+.writeup p em { color: var(--ink); }
+
+.writeup h3 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 2.75rem 0 0.5rem;
+}
+
+.writeup ul {
+  list-style: none;
+  margin: 0 0 1.2rem;
+  padding: 0;
+}
+
+.writeup li {
+  position: relative;
+  font-size: 0.88rem;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  padding-left: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.writeup li strong { color: var(--ink); font-weight: 600; }
+
+/* pencil-dash bullet */
+.writeup li::before {
+  content: '–';
+  position: absolute;
+  left: 0.2rem;
+  color: var(--red-ink);
+  font-weight: 700;
+}
+
+/* spec / BOM list at the top of a writeup uses a dot instead of a dash */
+.spec-list li::before { content: '·'; font-size: 1.2em; left: 0.3rem; top: -0.05em; }
+
+/* inline code / source-file references */
+.writeup code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  background: rgba(45, 90, 138, 0.1);
+  color: var(--blue-ink);
+  padding: 0.05em 0.35em;
+  border-radius: 2px;
+}
+
+/* pull-quote (notebook margin note) */
+.writeup blockquote {
+  margin: 1.25rem 0;
+  padding: 0.4rem 0 0.4rem 1.1rem;
+  border-left: 2.5px solid rgba(176, 58, 48, 0.3);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink);
+  font-style: italic;
+}
+
+/* --- Media placeholder slots (drop in an image / video / gif) --- */
+.media-slot {
+  margin: 1.5rem 0 1.75rem;
+  padding: 1.75rem 1.5rem;
+  border: 1.5px dashed rgba(86, 166, 112, 0.55);
+  border-radius: 4px;
+  background: rgba(86, 166, 112, 0.05);
+  text-align: center;
+}
+
+.media-slot .slot-kind {
+  display: inline-block;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red-ink);
+  border: 1px solid rgba(176, 58, 48, 0.3);
+  border-radius: 2px;
+  padding: 0.15rem 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.media-slot .slot-desc {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+/* --- Hand-typeset display equation (no JS / no MathJax dependency) --- */
+.equation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4em;
+  margin: 1.5rem 0;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  color: var(--ink);
+}
+
+.equation .frac {
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.equation .frac .num { border-bottom: 1.5px solid var(--ink); padding: 0 0.45em; }
+.equation .frac .den { padding: 0 0.45em; }
+
 /* --- Responsive --- */
 @media (max-width: 640px) {
   .hero { padding: 7rem 0 3rem; }
+  .media-slot { padding: 1.5rem 1rem; }
+  .equation { font-size: 1.1rem; }
   .background-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 1rem; }
   .contact-links { flex-direction: column; }

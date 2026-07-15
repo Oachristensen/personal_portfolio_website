@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gravity Cube — Owen</title>
-  <meta name="description" content="Design writeup for the Gravity Cube LED physics simulation.">
+  <title>LED Physics Cube — Owen</title>
+  <meta name="description" content="Design writeup for the LED Physics Cube — a 3D falling-sand simulation on an ESP32-S3 driving a cube of WS2812B LED matrices.">
   <link rel="stylesheet" href="../style.css">
 </head>
 
@@ -27,17 +27,19 @@
   <section class="hero">
     <div class="container">
       <p class="hero-label">// project writeup</p>
-      <h1>Gravity Cube</h1>
+      <h1>LED Physics Cube</h1>
       <p class="hero-intro">
-        <!-- TODO: one-line project summary -->
+        A 3D falling-sand physics simulation on a cube of <strong>384 WS2812B LEDs</strong>,
+        driven by an <strong>ESP32-S3</strong> — built over about a year for
+        <span class="marker">OpenSauce 2025/2026</span>.
       </p>
       <div class="status-bar">
         <span class="tech-tag">ESP32-S3</span>
         <span class="tech-tag">ESP-IDF</span>
         <span class="tech-tag">C</span>
         <span class="tech-tag">ICM-20948</span>
-        <span class="tech-tag">FreeRTOS</span>
         <span class="tech-tag">SPI</span>
+        <span class="tech-tag">WS2812B</span>
       </div>
     </div>
   </section>
@@ -51,9 +53,29 @@
     <div class="container">
       <p class="section-label">Overview</p>
       <h2>What it is</h2>
-      <p>
-        <!-- TODO: project overview -->
-      </p>
+      <div class="writeup">
+        <p>
+          A 3D falling-sand physics simulation running on an ESP32-S3, displayed on a
+          cube of WS2812B LED matrices.
+        </p>
+
+        <!-- PLACEHOLDER: hero video/gif of the cube running -->
+        <figure class="media-slot">
+          <span class="slot-kind">video / gif</span>
+          <span class="slot-desc">The cube running the falling-sand sim</span>
+        </figure>
+
+        <p>
+          A year-long project that evolved heavily, built to take to OpenSauce 2025/2026.
+        </p>
+
+        <ul class="spec-list">
+          <li><strong>MCU</strong> — ESP32-S3, programmed in C using the ESP-IDF HAL</li>
+          <li><strong>Sensor</strong> — ICM-20948 over a hand-rolled, register-level SPI driver (the HAL is used only for raw read/write transactions)</li>
+          <li><strong>LEDs</strong> — six 8×8 LED matrices, driven through the ESP-IDF <code>led_strip</code> library and a logic level shifter</li>
+          <li><strong>Power</strong> — 2000&nbsp;mAh 1S battery through a BMS breakout with overcharge protection, boosted to 5&nbsp;V</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -61,14 +83,78 @@
     <hr class="divider">
   </div>
 
-  <!-- Hardware -->
+  <!-- Where it started -->
   <section>
     <div class="container">
-      <p class="section-label">Hardware</p>
-      <h2>Design</h2>
-      <p>
-        <!-- TODO: hardware design notes — schematic decisions, component choices, PCB layout -->
-      </p>
+      <p class="section-label">The initial plan</p>
+      <h2>Where it started</h2>
+      <div class="writeup">
+        <p>
+          The initial plan was, on the surface level, recognizable as the finished
+          project: a cube of LED matrices controlled by an ESP32. I wanted to use as few
+          external libraries as possible, as I was coming from Arduino. It seemed simple:
+          wire up an ESP32, a gyroscope, and some LED panels, and write some code in Rust,
+          since I was curious about it.
+        </p>
+
+        <h3>Rust → C</h3>
+        <p>
+          I spent the first few weeks trying to get my Rust code to work. I tried to write
+          my own library, but after trying to wrap my head around the <code>unsafe</code>
+          keyword and lifetimes, I realized I was out of my depth and lacked the embedded
+          fundamentals I needed to understand things at that level yet. This led me to other
+          people's crates for LED control. Those didn't work either, though. I ended up
+          buying a logic analyzer to read their output and learned about different protocols.
+          Everything I tried would be correct for about 3 LEDs before a few bits would drift
+          and the output would break. I never ended up solving it, but in retrospect I
+          suspect two things:
+        </p>
+        <ul>
+          <li><strong>MCU configuration:</strong> most libraries only "supported" the ESP32-S3 and were written with the base ESP32 in mind.</li>
+          <li><strong>Immature LED libraries:</strong> all the LED crates at the time were user modifications on top of the HAL's SPI/I2C functions, with minimal documentation. They could have been wrong, or I could have set them up incorrectly.</li>
+        </ul>
+        <p>
+          I lacked the Rust knowledge to fix them myself and pivoted to C, a language with a
+          much more mature embedded ecosystem.
+        </p>
+
+        <h3>Gyroscope → Accelerometer</h3>
+        <p>
+          I now had a single LED matrix and an L3GD20H gyroscope wired up, and I could
+          finally write some software. I handwrote an I2C library for the gyroscope, but I
+          found the rotation data had constant drift, and without an objective reference like
+          an accelerometer to correct it, the data wasn't useful. This caused me to change
+          sensors — the reason for the overkill ICM-20948. I only ended up using the
+          accelerometer, but I wanted to keep my options open early in case I had any other
+          ideas.
+        </p>
+
+        <h3>Flickering LEDs → Level shifter</h3>
+        <p>
+          After quite a lot of learning C and software debugging, I had a working 1D physics
+          simulation.
+        </p>
+
+        <!-- PLACEHOLDER: video of the 1D sim with the display flickering -->
+        <figure class="media-slot">
+          <span class="slot-kind">video</span>
+          <span class="slot-desc">The 1D sim with the display flickering</span>
+        </figure>
+
+        <p>
+          But I had a new issue: the display would almost constantly flicker. I did some
+          research online, trying decoupling capacitors for noise and changing some of the
+          software configuration, but eventually realized it was an issue with the ESP32's
+          3.3&nbsp;V logic against the LEDs' 5&nbsp;V. A logic-level shifter breakout on the
+          LED data pin solved the problem.
+        </p>
+
+        <!-- PLACEHOLDER: video of the same sim after the level shifter, no flicker -->
+        <figure class="media-slot">
+          <span class="slot-kind">video</span>
+          <span class="slot-desc">The same sim after adding the level shifter — no flicker</span>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -76,14 +162,203 @@
     <hr class="divider">
   </div>
 
-  <!-- Firmware -->
+  <!-- 1D to 3D -->
+  <section>
+    <div class="container">
+      <p class="section-label">Scaling up</p>
+      <h2>1D → 3D</h2>
+      <div class="writeup">
+        <p>
+          This is when the project (and the problems) started to get much more complicated
+          and less organized. Instead of small walls I could break through after some
+          research, the last few walls were much taller and involved a lot more experimental
+          tinkering, with me only understanding why the fixes worked in retrospect. At this
+          stage there were also fewer "solutions" and more "workarounds," as proper solutions
+          would likely have required large amounts of other changes and rewrites. My general
+          debugging workflow was software → my wiring/hardware → the boards themselves. If
+          that didn't fix it: isolate the problem, do more research, and repeat.
+        </p>
+
+        <h3>3D physics sim software</h3>
+        <p>
+          Suddenly there was an issue I hadn't dealt with in the 1D sim: simulated pixels I
+          couldn't see. The sim only displays on the surface of the cube, so the internal
+          state was effectively invisible. If I did this again, I would write a Python script
+          to render what was happening internally, but at the time I just ran the sim slowly,
+          output all the pixel data, and stored a lot about the process in my head (and on
+          paper).
+        </p>
+
+        <!-- PLACEHOLDER: scans/photos of the handwritten notes pages -->
+        <figure class="media-slot">
+          <span class="slot-kind">image</span>
+          <span class="slot-desc">Scanned pages of my handwritten sim notes</span>
+        </figure>
+
+        <h3>The data writing takes time</h3>
+        <p>
+          I found that my friction-fit jumper wires were no longer consistent enough. When
+          you're writing 64 pixels every 30&nbsp;ms, a small gap from a loose wire isn't
+          likely to break the output; when you're writing 384, signal integrity starts to
+          matter (384 LEDs take 11.4&nbsp;ms to write, about a third of the delay time). A
+          small break in the stream causes the LEDs to read a reset. They then start reading
+          garbage once the break resolves and the data joins back mid-write. This didn't
+          happen much at 64 pixels, but when you're spending half of each cycle writing to the
+          panels, it becomes much more of an issue. I made the decision to move to perfboard
+          here, but I didn't love it: my electrical problem was solved, but it didn't work
+          much better than just soldering everything together with wires, and it was kicking
+          the space/mechanical problem down the road. (Also, I wasn't able to reasonably
+          remove the dev board once I wanted to change it, so I had to get another.)
+        </p>
+
+        <h3>Packing everything into the cube</h3>
+        <p>
+          The most mechanical issue: volume limitations. The largest problem was that the
+          ESP32-S3 dev board I was using is physically wider than the volume inside the cube,
+          but fits at an angle (the ESP32 is 65&nbsp;mm long, the cube internals only about
+          60&nbsp;mm on a side, before the wiring takes up space). This is where I actually
+          decided to model properly, making a mount that everything (dev board, IMU, level
+          shifter) could attach to, and that just barely managed to fit inside the volume of
+          the cube with all of the wiring.
+        </p>
+        <p>
+          It took many iterations, a lot of which were dealing with inconsistencies on
+          aftermarket boards (my LED panels were not square, and the four screw holes were
+          each 1–2&nbsp;mm off from centered). I initially soldered male jumpers before
+          realizing I could just buy low-gauge wire and cut it to length. In a future project,
+          this is where I would reach for a custom PCB that I could make fit perfectly, with
+          screw holes to mount with. At the time, I didn't feel comfortable at that level,
+          which is what led to my custom dev board project as a way to break into PCB design.
+        </p>
+
+        <!-- PLACEHOLDER: photo of the final printed mount + the Fusion 360 models -->
+        <figure class="media-slot">
+          <span class="slot-kind">image</span>
+          <span class="slot-desc">The final printed mount and some of the Fusion 360 models</span>
+        </figure>
+
+        <h3>It worked on my bench supply, not on portable power</h3>
+        <p>
+          <em>The big bad no-good brownout problem.</em> I wanted to take this project to
+          OpenSauce 2025, which meant it had to be portable. I had a DIY benchtop power supply
+          that I'd been using to power the project up to this point, and it was working well.
+          The idea was to use a portable phone charger, but when I wired it up, the project
+          would work for 1–2 seconds before the IMU stopped giving data. I initially suspected
+          electrical noise was causing the sensor failure; I learned about decoupling
+          capacitors and wired some up to both the supply and the sensor, but found they
+          didn't help. I then suspected my software. I was running the sensor over I2C at the
+          time, as it was what I was familiar with, but I had learned SPI was more
+          error-tolerant, so I rewrote my sensor library. This didn't solve the problem
+          either. I kept the SPI version though; the second pass was a lot cleaner and gave me
+          an excuse to implement features like burst read/write.
+        </p>
+        <p>
+          Eventually, after a lot of trial and error, I isolated the issue to the combination
+          of the cheap linear regulator on my ESP32 dev board and the high source impedance of
+          the portable charger. The LEDs would draw amps of current, the charger's output
+          would sag, and the 3.3&nbsp;V regulator (an <code>AMS1117</code>) would sag below the
+          cutoff voltage of the IMU. Since I couldn't remove the regulator without a hot-air
+          station and precise rework, the solution I landed on was to power the LEDs and the
+          ESP32 from separate ports on the charger with a shared ground. This, after months of
+          tinkering, finally made the project portable.
+        </p>
+        <p>
+          My biggest takeaway from this issue in particular is the value of proper debugging
+          tools. In this case specifically, an oscilloscope would have made this significantly
+          easier and removed a lot of the guesswork: I could have just probed the line, seen
+          the sag, and diagnosed it. It's part of why I'm particularly excited for university,
+          where I'll have access to a lot of the tools that are outside the scope of my home
+          workbench at the moment.
+        </p>
+
+        <h3>The battery — perfect is the enemy of done</h3>
+        <p>
+          Bringing this project to OpenSauce led to some very interesting conversations, and
+          they gave me a lot of confidence in the project. One in particular stuck with me: I
+          was talking with some of the BattleBots people, and after looking at the internals
+          of the cube they said something along the lines of:
+        </p>
+        <blockquote>You could probably cut some wires shorter and shove a LiPo in there.</blockquote>
+        <p>
+          The reason I had been so hesitant to introduce battery power was that I wanted to do
+          it "correctly": measure current draw, spec a BMS to it, and find a breakout. I
+          decided to just do it the easy way for this one, as I wanted the project finished. I
+          got a battery with a good amount of capacity and a BMS with overcharge protection
+          rated for 1&nbsp;amp, and capped the LEDs at 1/25th of their max brightness to stay
+          under that current:
+        </p>
+
+        <div class="equation" aria-label="60 milliamps times 384, divided by 25, is approximately 0.9 amps">
+          <span class="frac">
+            <span class="num">60&nbsp;mA&nbsp;×&nbsp;384</span>
+            <span class="den">25</span>
+          </span>
+          <span>≈&nbsp;0.9&nbsp;A</span>
+        </div>
+
+        <p>
+          So this project has a LiPo in it. I understand what I would do to implement it
+          correctly, but this isn't exactly that. If this were a product or a gift, I would
+          take more precautions, but for something that sits on my desk and occasionally gets
+          brought places, this is as far as I took it.
+        </p>
+        <p>
+          The combination of the brightness cap and the battery's low source impedance also
+          solved the brownout problem, so I was able to recombine the voltage lines and
+          resolve a past problem in a different way.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <hr class="divider">
+  </div>
+
+  <!-- Software -->
   <section>
     <div class="container">
       <p class="section-label">Firmware</p>
-      <h2>Implementation</h2>
-      <p>
-        <!-- TODO: firmware architecture, physics sim, LED mapping, FreeRTOS task structure -->
-      </p>
+      <h2>How it actually works</h2>
+      <div class="writeup">
+        <p>
+          The software consists of four files: the sim itself in <code>sim_functions</code>,
+          which assumes an ideal cube; the IMU driver in <code>icm-spi</code>; the hardware,
+          abstracted out in <code>panel_data</code>; and <code>main</code>, which combines
+          everything in the primary <code>while(true)</code> loop.
+        </p>
+
+        <h3>The sensor library</h3>
+        <ul>
+          <li>Register-level, written from the datasheet, using only the ESP-IDF SPI transmit/receive functions.</li>
+          <li>Burst read on the accel bytes to dramatically increase transaction speed.</li>
+          <li>A failed read returns the last good result instead of erroring, so the sensor survives small dropouts.</li>
+        </ul>
+
+        <h3>The physics library</h3>
+        <ul>
+          <li>Takes the gravity unit vector from the IMU as "down"; "left" and "right" come from the cross product with a reference vector chosen based on the initial sensor orientation.</li>
+          <li>If gravity is nearly parallel to the reference, it swaps to a different axis to avoid reference breakdown.</li>
+          <li><code>can_move</code> checks from full velocity down to 1 and takes the longest free move, so particles never overlap.</li>
+          <li><code>selected_indexes</code> means each particle can only move once per tick.</li>
+          <li>A random left/right tiebreak in the sim prevents directional bias.</li>
+        </ul>
+
+        <h3>Panel mapping</h3>
+        <ul>
+          <li>Converts x, y, z particle coordinates into writes on a single long LED strip. All panels are wired in series and are not in a consistent orientation.</li>
+          <li>Voxel (x, y, z) → face lookup table (precomputed once for all 512 cells at init) → 2D projection onto faces → mirroring/rotation → linear strip index.</li>
+          <li>This could have been six hardcoded <code>draw_x</code> functions. I didn't want that: I knew I'd be rebuilding this multiple times and possibly making a guide for others.</li>
+          <li>Instead, all physical rotation is abstracted into a <code>panel_array</code> holding each panel's order, physical direction, orientation, and mirroring. This can be guessed and checked empirically once the cube is assembled, which greatly streamlines the process.</li>
+        </ul>
+
+        <h3>Main</h3>
+        <ul>
+          <li>A single superloop instead of splitting into RTOS tasks: the project didn't need complex tasks or interrupts, and everything runs in a consistent cycle.</li>
+          <li>Common config broken out into a separate file (RGB color, shake sensitivity, debug modes).</li>
+          <li>If the accel magnitude passes a cutoff, the cube flashes random colors (a neat idea I got from OpenSauce people).</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -91,14 +366,31 @@
     <hr class="divider">
   </div>
 
-  <!-- Lessons -->
+  <!-- Retrospective -->
   <section>
     <div class="container">
       <p class="section-label">Retrospective</p>
-      <h2>What I learned</h2>
-      <p>
-        <!-- TODO: lessons learned, what you'd do differently -->
-      </p>
+      <h2>What I'd change</h2>
+      <div class="writeup">
+        <h3>What I'd do differently</h3>
+        <ul>
+          <li>A Python visualizer for the sim once it was converted to 3D.</li>
+          <li>A PCB for wiring instead of large printed mounts. In future projects I'll probably leave the "breadboard" phase earlier.</li>
+          <li>A properly specced battery and BMS, with computed and measured power draw.</li>
+          <li>A lot of <code>sim_functions</code> is debt from the 1D → 3D conversion and deserves a full rewrite.</li>
+        </ul>
+
+        <h3>If this were a product</h3>
+        <ul>
+          <li>A cheaper accel-only IMU.</li>
+          <li>An STM32 instead of an ESP32: smaller, cheaper, and I don't use the Wi-Fi/Bluetooth for anything on mine.</li>
+        </ul>
+
+        <h3>Where I went next</h3>
+        <ul>
+          <li>The <a href="atmega328pb-dev-board.html">PCB business card</a>. I bought a hotplate and made that project to get more comfortable with reflow soldering and KiCad design.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
