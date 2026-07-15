@@ -725,6 +725,45 @@ footer {
   line-height: 1.6;
 }
 
+/* --- Embedded media (video / images) --- */
+.writeup figure.media { margin: 1.5rem 0 1.75rem; }
+
+.writeup figure.media video {
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;   /* keeps tall phone clips from dominating the page */
+  margin: 0 auto;
+  border: 1.5px solid var(--grid-heavy);
+  border-radius: 4px;
+  background: #000;
+}
+
+.writeup figure.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1.5px solid var(--grid-heavy);
+  border-radius: 4px;
+  background: var(--paper-dark);
+}
+
+/* gallery of images sharing one caption */
+.writeup figure.media .media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.writeup figure.media figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.76rem;
+  font-style: italic;
+  color: var(--pencil);
+  text-align: center;
+  line-height: 1.5;
+}
+
 /* --- Hand-typeset display equation (no JS / no MathJax dependency) --- */
 .equation {
   display: flex;
