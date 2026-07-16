@@ -14,14 +14,13 @@ Static HTML/CSS portfolio for Owen — embedded systems / hardware engineering.
 - Color vocabulary: ink (dark text), pencil (muted), red-ink (accents/current), blue-ink (links/tags), highlight (yellow marker)
 
 ## Structure
-- `index.html` — landing/fork page. Two paths: Engineering (work.html) and Maker (maker.html)
-- `work.html` — professional portfolio: projects, background, resume, professional contact
-- `maker.html` — community/hobbyist: tutorials, build logs, casual contact (Discord, etc.)
+- `index.html` — main landing page. The professional portfolio: projects, background, resume, professional contact. Links out to the maker page (nav + a pointer in the contact section).
+- `maker.html` — community/hobbyist: tutorials, build logs, casual contact (Discord, etc.). Reached via the "Maker" link from `index.html`.
 - `style.css` — shared stylesheet with CSS custom properties (used by all pages)
-- `projects/` — individual project detail pages (to be added)
+- `projects/` — individual project detail pages
 
 ## Audience Routing
-The PCB business card QR code can point to index.html (self-select) or directly to work.html / maker.html depending on context. At OpenSauce, industry people get the work path, makers get the maker path.
+There's no self-select fork anymore — `index.html` (the professional portfolio) is the front door, so recruiters and engineers land on the work directly, with the maker side one click away. The PCB business card QR code points to the bare domain (→ `index.html`); it can still deep-link straight to `maker.html` for maker-context handouts (e.g. at OpenSauce).
 
 ## Conventions
 - Use CSS custom properties from `:root` for all colors

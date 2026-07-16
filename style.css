@@ -560,6 +560,12 @@ section h2 {
   border-color: var(--blue-ink);
 }
 
+.maker-link {
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--pencil);
+}
+
 /* --- AI Disclaimer Note --- */
 .ai-note {
   display: inline-block;
@@ -796,4 +802,17 @@ footer {
   .contact-links { flex-direction: column; }
   .contact-links a { text-align: center; }
   .footer-inner { flex-direction: column; gap: 0.5rem; }
+}
+
+/* Narrow phones: tighten the nav so all items fit on one line */
+@media (max-width: 480px) {
+  nav { padding: 0 0.85rem; }
+  .nav-links { gap: 0.6rem; }
+  .nav-links a { font-size: 0.7rem; letter-spacing: 0; }
+}
+
+/* Very small phones: shrink a touch more so nothing clips */
+@media (max-width: 340px) {
+  .nav-links { gap: 0.5rem; }
+  .nav-links a { font-size: 0.62rem; }
 }
