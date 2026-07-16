@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owen — Resume</title>
+  <meta name="description" content="Owen Christensen — resume. Embedded systems, PCB design, and firmware.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <header>
+    <nav>
+      <a href="/" class="nav-name">Owen</a>
+      <ul class="nav-links">
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#background">Background</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" style="padding-bottom: 1.5rem;">
+    <div class="container">
+      <p class="hero-label">// resume</p>
+      <h1>Resume</h1>
+      <p class="hero-intro">
+        Embedded systems, PCB design, and firmware. The PDF below should be the
+        <span class="marker">current version</span> — I try to keep it up to date.
+      </p>
+      <div class="hero-actions">
+        <a href="assets/owen-resume.pdf" class="btn-primary" download>Download PDF ↓</a>
+        <a href="assets/owen-resume.pdf" class="btn-secondary" target="_blank" rel="noopener">Open in new tab</a>
+        <a href="index.html" class="btn-secondary">← Back to work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded PDF -->
+  <div class="container">
+    <object class="resume-frame" data="assets/owen-resume.pdf" type="application/pdf">
+      <div class="resume-fallback">
+        <p>Your browser can't display the embedded PDF.<br>
+          <a href="assets/owen-resume.pdf" download>Download the resume</a> instead.</p>
+      </div>
+    </object>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <p>&copy; 2026 Owen</p>
+        <p>plain html & css</p>
+      </div>
+      <div style="text-align:center; margin-top:1rem;">
+        <span class="ai-note">
+          <span class="ai-note-trigger">* ai note</span>
+          <span class="ai-note-body">The HTML and CSS for this website were created with the help of AI,
+            I am not a frontend developer and wanted to experiment with Claude code.
+            All design decisions and written content are mine</span>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
